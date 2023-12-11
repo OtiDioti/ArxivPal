@@ -48,7 +48,7 @@ def PrintArticles(A, keywords):
                 st.session_state['current_title'] = title_str # saving the title of the interesting paper into session state
                 st.session_state['current_abstract'] = abstract_str # saving the abstract of the interesting paper into session state
                 st.session_state['current_link'] = "https://arxiv.org/" + pdf_link # saving the link of the interesting paper into session state
-                switch_page("ChatGPT") # switching to GPT chat
+                switch_page("GPTKeyHole") # switching to GPT chat
 
 
 

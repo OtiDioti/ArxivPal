@@ -46,8 +46,13 @@ is cosine similarity — we measure the cosine of the angle between each pair of
 We can embed and store all of our document splits in a single command using the Chroma vector 
 store and OpenAIEmbeddings model.'''
 
+
 st.session_state["openai_model"] = 'gpt-4' #"gpt-3.5-turbo" # create it and set it to gpt-3.5-turbo
-os.environ["OPENAI_API_KEY"] = open('/home/francesco/Desktop/University/PyFiles/VariousPythonProjects/ForFun/StreamlitProjects/TestFolder/pages/key.txt', 'r').read().strip('\n')
+text_input_container = st.empty() # showcase bar
+key = st.text_input('Insert OpenAi API key:') # asking for key
+os.environ["OPENAI_API_KEY"] = st.session_state['API_key'] # set key
+
+
 vectorstore = Chroma.from_texts(texts = all_splits, embedding = OpenAIEmbeddings()) # storing the chuncks as high dimensional vectors
 
 ####  Now, given a query (i.e. question) we should be able to find the snippets containing relevant information ####

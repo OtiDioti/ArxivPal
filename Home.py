@@ -108,7 +108,7 @@ with st.sidebar:
         st.session_state['research_field_url'] = 'https://arxiv.org/list/nucl-th/new'
         switch_page('page') 
 
-st.session_state['pages_to_hide'] = ['ChatGPT', 'page'] # list of all the pages that won't show up in the sidebar
+st.session_state['pages_to_hide'] = ['ChatGPT', 'page', 'GPTKeyHole'] # list of all the pages that won't show up in the sidebar
 hide_pages(st.session_state['pages_to_hide'])
 
 #%%
