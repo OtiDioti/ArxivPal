@@ -1,0 +1,6 @@
+streamlit_extras
+st-pages
+matplotlib
+langchain
+pypdf
+openai
