@@ -8,7 +8,6 @@ from st_pages import hide_pages # needed to hide pages
 from SubmissionsBarChart import Bars
 import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator
-# from st_pages import Page, show_pages, Section
 #%%
 st.set_page_config(page_title = 'Arxiv Scanner', 
                    layout = 'centered', 
@@ -111,14 +110,6 @@ with st.sidebar:
 
 st.session_state['pages_to_hide'] = ['ChatGPT', 'page'] # list of all the pages that won't show up in the sidebar
 hide_pages(st.session_state['pages_to_hide'])
-
-# Specify what pages should be shown in the sidebar, and what their titles 
-# and icons should be
-# show_pages([ 
-#     Page("test.py", "Home", ":house:"),
-#     Section(name="Research Fields", icon=":books:"),
-#         Page("page.py", "Condensed Matter", ":notebook:"),
-#         Page("page.py", "Condensed Matter", ":blue_book:"),])
 
 #%%
 y_pos, n_new_submissions, names = Bars() # data required for bar plot
