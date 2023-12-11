@@ -1,4 +1,4 @@
-streamlit-extras
+streamlit_extras
 st-pages
 matplotlib
 langchain
