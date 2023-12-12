@@ -2,8 +2,9 @@ from openai import OpenAI
 import streamlit as st
 import os 
 import sys
-sys.path.append('/home/francesco/Desktop/University/PyFiles/VariousPythonProjects/ForFun/StreamlitProjects/TestFolder/Modules')
-dir_path = os.path.dirname(os.path.realpath(__file__))
+dir_path = os.path.dirname(os.path.realpath(__file__)) # current directory
+prev_dir = os.path.abspath(os.path.join(dir_path, os.pardir)) # parent of current directory
+sys.path.append(prev_dir+'/Modules')
 from PDFTextExtracter import KnowledgeExtracter
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import OpenAIEmbeddings
