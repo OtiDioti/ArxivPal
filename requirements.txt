@@ -4,3 +4,4 @@ matplotlib
 langchain
 pypdf
 openai
+chromadb
