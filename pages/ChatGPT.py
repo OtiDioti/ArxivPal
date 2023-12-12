@@ -8,6 +8,10 @@ sys.path.append(prev_dir+'/Modules')
 from PDFTextExtracter import KnowledgeExtracter
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import OpenAIEmbeddings
+###
+import pysqlite3
+sys.modules["sqlite3"] = sys.modules.pop("pysqlite3") # this should fix an error with chromadb
+###
 from langchain.vectorstores import Chroma
 from langchain.chat_models import ChatOpenAI
 from langchain.retrievers.multi_query import MultiQueryRetriever
