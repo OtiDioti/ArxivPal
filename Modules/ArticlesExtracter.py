@@ -9,7 +9,7 @@ def ArticlesExtracter(URL):
     dlpage = soup.find(id="dlpage") # obtaining the dlpage
     section_names = dlpage.findAll('h3') # finding the names of all sections contained in the URL (i.e. new_submissions, cross_list, replacements)
     n_sections = len(section_names) # new_submissions, cross_list, replacements (sometimes one or two of these are missing)
-    title = dlpage.findAll("h1")[0] # find page title
+    page_title = dlpage.findAll("h1")[0] # find page title
     submissions = dlpage.findAll("dl") # find all submissions within dlpage (note: each <dl> correspond to either New Submissions, Cross list or Replacement)
     ##### Here we separate the submissions #####
     tmp_list = [0, 0, 0] # we need a list since we do not know how many sections will be presented in the current URL
@@ -25,4 +25,4 @@ def ArticlesExtracter(URL):
         elif  section_name.count('Replacements') == 1:
             tmp_list[2] = submissions[i]
             
-    return tmp_list, title
+    return tmp_list, page_title
