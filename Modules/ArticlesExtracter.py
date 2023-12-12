@@ -1,7 +1,3 @@
-import sys
-sys.path.append('/home/francesco/Desktop/University/PyFiles/MyModules/')
-sys.path.append('/home/francesco/Desktop/University/PyFiles/VariousPythonProjects/ForFun/StreamlitProjects/TestFolder/')
-#import WebScrapingModules as wsm
 import requests
 from bs4 import BeautifulSoup
 #%% 
