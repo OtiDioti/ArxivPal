@@ -13,9 +13,9 @@ st.set_page_config(page_title = 'ArxivPal',
                    layout = 'centered', 
                    page_icon = ':house:',
                    menu_items={
-                   'Get Help': 'https://arxiv.org/list/cond-mat/new/',
-                   'Report a bug': "https://arxiv.org/list/cond-mat/new/",
-                   'About': "# This is a header. This is an *extremely* cool app!"},
+                   'Get Help': 'https://github.com/OtiDioti/ArXivPal/issues',
+                   'Report a bug': "https://github.com/OtiDioti/ArXivPal/issues",
+                   'About': "# The app is work in progress: any comment/suggestion/request is welcome!"},
                    initial_sidebar_state="collapsed")
 
 
