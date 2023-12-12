@@ -9,7 +9,7 @@ from SubmissionsBarChart import Bars
 import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator
 #%%
-st.set_page_config(page_title = 'Arxiv Scanner', 
+st.set_page_config(page_title = 'ArxivPal', 
                    layout = 'centered', 
                    page_icon = ':house:',
                    menu_items={
