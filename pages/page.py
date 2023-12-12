@@ -6,6 +6,7 @@ from printer import PrintArticles
 from ArticlesExtracter import ArticlesExtracter
 from st_pages import hide_pages # needed to hide pages
 #%% 
+st.set_page_config(initial_sidebar_state="collapsed")
 hide_pages(st.session_state['pages_to_hide'])
 URL = st.session_state['research_field_url'] # recovering url of selected arxiv page to scrape
 
