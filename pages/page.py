@@ -28,3 +28,6 @@ submission_list, title = ArticlesExtracter(URL)
 for i in range(2): # we do not care about Replacements, since they do not posses an abstract (thus we iterate as 0, 1 and not 0, 1, 2)
     if submission_list[i] != 0:
         PrintArticles(submission_list[i], keywords)
+
+
+    
