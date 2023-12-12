@@ -1,7 +1,7 @@
 import io
 import requests
 from pypdf import PdfReader
-import base64
+# import base64
 #%%
 
 def KnowledgeExtracter(URL): # URL must take you to open a pdf file
@@ -39,4 +39,3 @@ def KnowledgeExtracter(URL): # URL must take you to open a pdf file
     
     return paper_text#, img_list
 
-# KnowledgeExtracter('https://arxiv.org/pdf/2312.04631.pdf')

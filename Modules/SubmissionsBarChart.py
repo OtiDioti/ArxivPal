@@ -1,10 +1,8 @@
 import sys
 import os 
-sys.path.append('/home/francesco/Desktop/University/PyFiles/MyModules/') 
 dir_path = os.path.dirname(os.path.realpath(__file__)) # directory containing this file
 sys.path.append(dir_path)
 import numpy as np
-from UsefulPlotting import BarChart
 from ArticlesExtracter import ArticlesExtracter
 #%%
 def Bars(URLS = None):
