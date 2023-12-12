@@ -49,8 +49,6 @@ store and OpenAIEmbeddings model.'''
 
 
 st.session_state["openai_model"] = 'gpt-4' #"gpt-3.5-turbo" # create it and set it to gpt-3.5-turbo
-text_input_container = st.empty() # showcase bar
-key = st.text_input('Insert OpenAi API key:') # asking for key
 os.environ["OPENAI_API_KEY"] = st.session_state['API_key'] # set key
 
 
@@ -105,17 +103,20 @@ def ChunksRetriever_multi_query(question, vector_database, half_number_of_chunks
 #%% Setting up the initial state of the language model
 sys_prompt = """You will now receive the abstract to a scientific paper. Furthermore, 
 you will also receive snippets of the paper containing useful information to answer future questions. 
-Try to produce formal answers, and abstain from using equations when possible. If you don't know the answer, 
-just say that you don't know, it is imperative you don't try to make up an answer."""
+Try to produce formal answers, and abstain from using equations when possible. If the text does not contain the
+required information to answer future questions you can try to be flexible and answer it anyways, however, 
+it is imperative you make this clear in the message. Whenever the information is instead contained in the paper,
+try to reference the pieces of text containing the answer when replying."""
 
 gpt_answer = """Ok. I will mostly base my future answers on the content provided in 
-the paper and I will try to be as formal as possible. Also, I will avoid making up answers, 
-and I will make it clear when I do not know the answer to a question"""
+the paper and I will try to be as formal as possible. Also, I will make it clear whenever an
+answer I am providing does not stem from the content of the information received; on the other hand, 
+I will try to reference the provided pieces of text if these do contain the requested information."""
 
 sys_nudge = """To answer the following question use the previously provided information together 
 with these new chunks of information: """ # this will be used to tell gpt where to look for answers
 
-client = OpenAI(api_key = open(dir_path+'/key.txt', 'r').read().strip('\n'))
+client = OpenAI(api_key = st.session_state['API_key'])
 
 st.session_state.messages = [
     {'role':'system', 'content':sys_prompt},
@@ -156,6 +157,10 @@ if prompt := st.chat_input("What can I help you with?"): # within the chat bar
         full_response += response.choices[0].message.content
         message_placeholder.markdown(full_response)
     st.session_state.messages.append({"role": "assistant", "content": full_response})
+    if len(st.session_state.messages) >= 9: # the chatbot will remember only the previous question (and corresponding answer)
+        st.session_state.messages.pop(3) # removing the first chuncks of text
+        st.session_state.messages.pop(3) # removing the first question
+        st.session_state.messages.pop(3) # removing the first answer
 
     
     
