@@ -33,7 +33,7 @@ paper = KnowledgeExtracter(URL) # here we use the URL to obtain the the string o
 
 #### splitting text into chunks with some overlap between them ####
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size = 3000, chunk_overlap = 500, add_start_index=True) # we’ll split our documents into chunks of 1000 characters with 200 characters of overlap between chunks
+    chunk_size = 1200, chunk_overlap = 300, add_start_index=True) # we’ll split our documents into chunks of 1000 characters with 200 characters of overlap between chunks
 all_splits = text_splitter.split_text(paper) # this is now a list of stings with the specifized chunk_size 
 
 #### storing chuncks into high dimensional vectors ####
@@ -81,41 +81,37 @@ def ChunksRetriever_single_question(question, nr_of_chunks = 6):
     retrieved_chunks = retriever.get_relevant_documents(question)
     return retrieved_chunks
 
-def ChunksRetriever_multi_query(question, vector_database, half_number_of_chunks = 3, number_of_variation_question = 5):
+def ChunksRetriever_multi_query(question, vector_database, half_number_of_chunks = 7):
     ''' This function takes in a question and asks a llm to generate 3 (this 
     number is set by default and can be changed by changing the PROMPTTEMPLATE in
     MultiQueryRetriever) variations of the question. These quesries are then made into 
     vectors which are then projected onto the paper chunks to find the best suitable chunks 
     in terms of information to answer the original question.'''
     
-    multi_query_prompt = PromptTemplate(
-    input_variables=["question"],
-    template='''You are an AI language model assistant. Your task is 
-    to generate '''+str(number_of_variation_question)+''' different versions of the given user question to retrieve relevant 
-    documents from a vector  database. By generating multiple perspectives on the user question, your goal is to 
-    help the user overcome some of the limitations of distance-based similarity search. 
-    Provide these alternative questions separated by newlines. Original question: ''' + question,
-    )
     llm = ChatOpenAI(model_name = st.session_state["openai_model"], temperature=0) # defining which llm will provide the question variations
     retriever_from_llm = MultiQueryRetriever.from_llm(
         retriever = vector_database.as_retriever(search_type="similarity", search_kwargs={"k": half_number_of_chunks}),
-        llm=llm,
-        prompt = multi_query_prompt
-    )
+        llm=llm)
+    
     retrieved_chunks = retriever_from_llm.get_relevant_documents(query = question)
     return retrieved_chunks
+
+
 #%% Setting up the initial state of the language model
 sys_prompt = """You will now receive the abstract to a scientific paper. Furthermore, 
 you will also receive snippets of the paper containing useful information to answer future questions. 
 Try to produce formal answers, and abstain from using equations when possible. If the text does not contain the
 required information to answer future questions you can try to be flexible and answer it anyways, however, 
 it is imperative you make this clear in the message. Whenever the information is instead contained in the paper,
-try to reference the pieces of text containing the answer when replying."""
+try to cite the phrase/paragraph containing the answer when replying: keep these citations as short as possible. Also,
+warn the user you are about to make a citation to the paper, and try to also expand on this citation providing additional details."""
 
 gpt_answer = """Ok. I will mostly base my future answers on the content provided in 
 the paper and I will try to be as formal as possible. Also, I will make it clear whenever an
 answer I am providing does not stem from the content of the information received; on the other hand, 
-I will try to reference the provided pieces of text if these do contain the requested information."""
+I will try to cite the provided pieces of text if these do contain the requested information. I will keep the citations
+as short as possible whilst keeping them relevant and I will make sure to make clear which parts of my answers are citations.
+Lastly, I will try to expand on these providing additional details."""
 
 sys_nudge = """To answer the following question use the previously provided information together 
 with these new chunks of information: """ # this will be used to tell gpt where to look for answers
@@ -129,7 +125,7 @@ st.session_state.messages = [
 ]  # THIS SHOULD UPDATE EVERY TIME YOU ENTER THIS PAGE
 
 #%%
-half_number_of_chunks = 4 # this is roughly half the number of chunks of text that gpt will search through
+half_number_of_chunks = 7 # this is roughly half the number of chunks of text that gpt will search through
 
 st.title("Ask GPT (beta)") # adds title to page
 

@@ -32,10 +32,8 @@ def KnowledgeExtracter(URL): # URL must take you to open a pdf file
         #         img_list.append(base64.b64encode(image_file_object.data).decode('utf-8')) # converting image to baase64 and appending (conversion needed for chatgpt)
             
     
-    # lowered_txt = paper_text.lower() # will be needed for finding words
-    # introduction_idx = lowered_txt.find('introduction') # finds the point in the paper at which the word "introduction" appears for the first time (.lower() is needed to find references instead of Abstract or ABSTRACT)
-    references_idx = paper_text.rfind('[1]') # finds the point in the paper at which "[1]" appears for the last time (this should in theory help finding the references section)
-    paper_text = paper_text[:references_idx].replace('\n',' ') # removes all text before abstract (i.e. title and authors) and after references start, and removes all newline commands
+    ### could be good if we found a general way keep only main text (remove abstract and references)
+    paper_text = paper_text[:].replace('\n',' ') # removes all newline commands
     
     return paper_text#, img_list
 
